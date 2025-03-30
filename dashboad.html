@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">FreelancerPro</div>
+        <div class="nav-links">
+            <a href="#" class="active" id="dashboardLink">Dashboard</a>
+            <a href="profile.html" id="profileLink">Profile</a>
+        </div>
+        <div class="user-profile">
+            <img id="userAvatar" class="user-avatar" src="" alt="User">
+            <span id="userName"></span>
+            <button id="logoutBtn" class="btn" style="margin-left: 10px; padding: 0.5rem 1rem;">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Page Header with Add New Button -->
+        <div class="page-header">
+            <h1 class="page-title">Dashboard</h1>
+            <button class="btn" id="createLeadBtn">
+                <span class="material-icons" style="margin-right: 8px;">add</span>
+                Add New Lead
+            </button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active" data-tab="clients">Clients</div>
+            <div class="tab" data-tab="leads">Leads</div>
+        </div>
+
+        <!-- Clients Table -->
+        <div class="tab-content active" id="clientsTab">
+            <div class="table-container">
+                <table id="clientsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Client Details</th>
+                            <th>Status</th>
+                            <th>Comments</th>
+                            <th>Payments</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clientsTableBody">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Leads Table -->
+        <div class="tab-content" id="leadsTab">
+            <div class="table-container">
+                <table id="leadsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Client Details</th>
+                            <th>Status</th>
+                            <th>Comments</th>
+                            <th>Payments</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leadsTableBody">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Client/Lead Form Modal -->
+    <div class="modal-backdrop" id="clientModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="modal-title">Add New</h2>
+                <button class="close-btn" id="closeClientModal">&times;</button>
+            </div>
+            <form id="clientForm">
+                <div class="form-group">
+                    <label for="customerName">Customer Name *</label>
+                    <input type="text" id="customerName" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact">Contact *</label>
+                    <input type="text" id="contact" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location *</label>
+                    <input type="text" id="location" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Type *</label>
+                    <div class="status-toggle">
+                        <div class="status-option active" data-value="lead">Lead</div>
+                        <div class="status-option" data-value="client">Client</div>
+                    </div>
+                </div>
+
+                <!-- Lead Fields -->
+                <div class="conditional-fields" id="leadFields">
+                    <div class="form-group">
+                        <label for="leadType">Lead Type *</label>
+                        <select id="leadType" class="form-control" required>
+                            <option value="warm">Warm Lead</option>
+                            <option value="cold">Cold Lead</option>
+                            <option value="quotation">Quotation Sent</option>
+                            <option value="converted">Converted</option>
+                        </select>
+                    </div>
+
+                    <div class="conditional-fields" id="convertedFields">
+                        <div class="form-group">
+                            <label for="convertedTotalAmount">Total Amount ($)</label>
+                            <input type="number" id="convertedTotalAmount" class="form-control" min="0" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="convertedAdvancePayment">Advance Payment ($)</label>
+                            <input type="number" id="convertedAdvancePayment" class="form-control" min="0" step="0.01">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Client Fields -->
+                <div class="conditional-fields" id="clientFields">
+                    <div class="form-group">
+                        <label for="clientStatus">Status *</label>
+                        <select id="clientStatus" class="form-control" required>
+                            <option value="to-start">To Start</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="changes">Changes</option>
+                            <option value="delivered">Delivered</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="totalAmount">Total Amount ($)</label>
+                        <input type="number" id="totalAmount" class="form-control" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="advancePayment">Advance Payment ($)</label>
+                        <input type="number" id="advancePayment" class="form-control" min="0" step="0.01">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="comments">Comments</label>
+                    <textarea id="comments" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="form-group" style="display: flex; justify-content: flex-end; gap: 1rem;">
+                    <button type="button" class="btn btn-secondary" id="cancelForm">Cancel</button>
+                    <button type="submit" class="submit-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal-backdrop" id="paymentModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Payment</h2>
+                <button class="close-btn" id="closePaymentModal">&times;</button>
+            </div>
+            <form id="paymentForm">
+                <input type="hidden" id="paymentDocId">
+                <input type="hidden" id="paymentType">
+
+                <div class="form-group">
+                    <label for="editTotalAmount">Total Amount ($)</label>
+                    <input type="number" id="editTotalAmount" class="form-control" min="0" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="editAdvancePayment">Advance Payment ($)</label>
+                    <input type="number" id="editAdvancePayment" class="form-control" min="0" step="0.01" required>
+                </div>
+
+                <div class="form-group" style="display: flex; justify-content: flex-end; gap: 1rem;">
+                    <button type="button" class="btn btn-secondary" id="cancelPaymentForm">Cancel</button>
+                    <button type="submit" class="submit-btn">Update Payment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Comment Sidebar -->
+    <div class="sidebar" id="commentSidebar">
+        <div class="sidebar-header">
+            <h3>Comments</h3>
+            <button class="close-sidebar" id="closeSidebar">&times;</button>
+        </div>
+        <div class="sidebar-content" id="commentContent">
+            <!-- Comment content will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-backdrop active" id="loginModal">
+        <div class="login-container">
+            <h2 class="login-title">Welcome to FreelancerPro</h2>
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+                    <div class="error-message" id="emailError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                    <div class="error-message" id="passwordError"></div>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+                
+                <div class="divider">or</div>
+                
+                <button type="button" class="google-signin-btn" id="googleSignInBtn">
+                    <img src="./assets/google-logo.png" alt="Google logo" class="google-icon">
+                    Sign in with Google
+                </button>
+            </form>
+            <div class="login-footer">
+                Don't have an account? <a href="#" id="showRegister">Register</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-backdrop" id="registerModal">
+        <div class="login-container">
+            <h2 class="login-title">Create Account</h2>
+            <form class="login-form" id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Full Name</label>
+                    <input type="text" id="registerName" class="form-control" placeholder="Enter your full name" required>
+                    <div class="error-message" id="nameError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" class="form-control" placeholder="Enter your email" required>
+                    <div class="error-message" id="registerEmailError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password (min 6 characters)</label>
+                    <input type="password" id="registerPassword" class="form-control" placeholder="Enter your password" minlength="6" required>
+                    <div class="error-message" id="registerPasswordError"></div>
+                </div>
+                <button type="submit" class="submit-btn">Register</button>
+            </form>
+            <div class="login-footer">
+                Already have an account? <a href="#" id="showLogin">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

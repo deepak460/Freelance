@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - FreelancerPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        :root {
+            --primary-color: #6C63FF;
+            --primary-hover: #5A55D4;
+            --secondary-color: #303036;
+            --bg-color: #F4F6F8;
+            --text-color: #222;
+            --text-light: #555;
+            --card-bg: #FFFFFF;
+            --border-color: #DEDEDE;
+            --section-padding: 7rem 0;
+            --box-shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --box-shadow-medium: 0 8px 20px rgba(0, 0, 0, 0.12);
+            --transition-duration: 0.3s ease-in-out;
+            --border-radius: 10px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            font-size: 1rem;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /*===== HEADER =====*/
+        .l-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background-color: var(--card-bg);
+            box-shadow: var(--box-shadow-light);
+            transition: background-color var(--transition-duration), box-shadow var(--transition-duration);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav__logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color var(--transition-duration);
+        }
+
+        .nav__logo:hover {
+            color: var(--primary-hover);
+        }
+
+        .nav__menu {
+            display: flex;
+        }
+
+        .nav__list {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav__item {
+            position: relative;
+        }
+
+        .nav__link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color var(--transition-duration);
+        }
+
+        .nav__link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav__link.active-link {
+            color: var(--primary-color);
+        }
+
+        .nav__link.active-link::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 1.5px;
+        }
+
+        .nav__toggle {
+            display: none;
+            font-size: 1.75rem;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: color var(--transition-duration);
+        }
+
+        .nav__toggle:hover {
+            color: var(--primary-color);
+        }
+
+        /*===== HOME =====*/
+        .home {
+            height: calc(100vh - 3.5rem);
+            padding: var(--section-padding);
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .home__data {
+            flex: 1;
+            padding-right: 2rem;
+        }
+
+        .home__title {
+            font-size: 3rem;
+            margin-bottom: 1.75rem;
+            line-height: 1.1;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .home__title-color {
+            color: var(--primary-color);
+        }
+
+        .home__social {
+            display: flex;
+            gap: 1.25rem;
+            margin: 2.5rem 0;
+        }
+
+        .home__social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: rgba(108, 99, 255, 0.15);
+            color: var(--primary-color);
+            border-radius: 50%;
+            font-size: 1.3rem;
+            transition: background-color var(--transition-duration), color var(--transition-duration), transform var(--transition-duration), box-shadow var(--transition-duration);
+        }
+
+        .home__social-icon:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-4px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .home__img {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-circle {
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 6px solid var(--primary-color);
+            box-shadow: var(--box-shadow-medium);
+            transition: transform var(--transition-duration);
+        }
+
+        .profile-circle:hover {
+            transform: scale(1.03);
+        }
+
+        .profile-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /*===== BUTTON =====*/
+        .button {
+            display: inline-block;
+            padding: 0.85rem 1.75rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color var(--transition-duration), transform var(--transition-duration), box-shadow var(--transition-duration);
+            box-shadow: var(--box-shadow-light);
+        }
+
+        .button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--box-shadow-medium);
+        }
+
+        .button:active {
+            transform: translateY(0);
+            box-shadow: var(--box-shadow-light);
+        }
+
+        /*===== SECTION =====*/
+        .section {
+            padding: var(--section-padding);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
+            text-align: center;
+            position: relative;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        /*===== ABOUT =====*/
+        .about__container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .about__img {
+            display: flex;
+            justify-content: center;
+        }
+
+        .about__img img {
+            width: 320px;
+            height: 320px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-medium);
+            transition: transform var(--transition-duration);
+        }
+
+        .about__img img:hover {
+            transform: scale(1.05);
+        }
+
+        .about__subtitle {
+            font-size: 1.75rem;
+            margin-bottom: 1.25rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .about__text {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        /*===== WORK =====*/
+        .work__container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow-light);
+            transition: transform var(--transition-duration), box-shadow var(--transition-duration);
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--box-shadow-medium);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            transition: transform 0.4s ease-out;
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.03);
+        }
+
+        .project-info {
+            padding: 1.75rem;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .project-description {
+            color: var(--text-light);
+            margin-bottom: 1.25rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .project-stats {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .project-stat {
+            display: flex;
+            align-items: center;
+            margin-right: 1.25rem;
+        }
+
+        .stat-icon {
+            margin-right: 0.6rem;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+
+        /*===== CONTACT =====*/
+        .contact__container {
+            max-width: 680px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-medium);
+        }
+
+        .contact__form {
+            display: grid;
+            gap: 1.75rem;
+        }
+
+        .contact__input {
+            width: 100%;
+            padding: 1.1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            transition: border-color var(--transition-duration), box-shadow var(--transition-duration);
+            color: var(--text-color);
+        }
+
+        .contact__input::placeholder {
+            color: var(--text-light);
+        }
+
+        .contact__input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(108, 99, 255, 0.25);
+        }
+
+        .contact__button {
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            background-color: var(--primary-color);
+            color: white;
+            transition: background-color var(--transition-duration), transform var(--transition-duration), box-shadow var(--transition-duration);
+            box-shadow: var(--box-shadow-light);
+        }
+
+        .contact__button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--box-shadow-medium);
+        }
+
+        .contact__button:active {
+            transform: translateY(0);
+            box-shadow: var(--box-shadow-light);
+        }
+
+        /*===== FOOTER =====*/
+        .footer {
+            background-color: var(--secondary-color);
+            padding: 2.5rem 0;
+            text-align: center;
+            color: #eee;
+        }
+
+        .footer__title {
+            font-size: 1.75rem;
+            margin-bottom: 1.25rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .footer__social {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer__icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #eee;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            transition: background-color var(--transition-duration), color var(--transition-duration), transform var(--transition-duration);
+        }
+
+        .footer__icon:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer__copy {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        /*===== RESPONSIVE =====*/
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav__menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 75%;
+                height: 100vh;
+                background-color: var(--card-bg);
+                box-shadow: -5px 0 10px rgba(0, 0, 0, 0.15);
+                transition: right var(--transition-duration);
+                padding: 3rem 2rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+            }
+
+            .nav__menu.show {
+                right: 0;
+            }
+
+            .nav__list {
+                flex-direction: column;
+                gap: 1.5rem;
+                margin-top: 3rem;
+            }
+
+            .nav__link {
+                font-size: 1.1rem;
+            }
+            
+            .home {
+                flex-direction: column;
+                text-align: center;
+                height: auto;
+                padding-top: 6rem;
+                padding-bottom: 3rem;
+            }
+            
+            .home__data {
+                padding-right: 0;
+                margin-bottom: 2rem;
+            }
+            
+            .home__social {
+                justify-content: center;
+            }
+            
+            .profile-circle {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .about__container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!--===== HEADER =====-->
+    <header class="l-header">
+        <nav class="nav bd-grid">
+            <div>
+                <a href="#" class="nav__logo">FreelancerPro</a>
+            </div>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="#home" class="nav__link active-link">Home</a></li>
+                    <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+                    <li class="nav__item"><a href="#work" class="nav__link">Work</a></li>
+                    <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="nav__toggle" id="nav-toggle">
+                <i class='bx bx-menu'></i>
+            </div>
+        </nav>
+    </header>
+
+    <main class="l-main">
+        <!--===== HOME =====-->
+        <section class="home bd-grid" id="home">
+            <div class="home__data">
+                <h1 class="home__title">Hi,<br>I'am <span class="home__title-color" id="portfolioName">Your Name</span><br> <span id="portfolioTitle">Web Designer</span></h1>
+                <p class="about__text" id="portfolioAbout">Creative professional specializing in design and development. Passionate about creating beautiful, functional digital experiences.</p>
+                <a href="#contact" class="button">Contact</a>
+
+                <div class="home__social" id="portfolioSocialLinks">
+                    <!-- Social links will be added by JavaScript -->
+                </div>
+            </div>
+
+            <div class="home__img">
+                <div class="profile-circle">
+                    <img src="https://via.placeholder.com/350" alt="Profile Picture" id="portfolioProfilePic">
+                </div>
+            </div>
+        </section>
+
+        <!--===== ABOUT =====-->
+        <section class="about section" id="about">
+            <h2 class="section-title">About</h2>
+
+            <div class="about__container bd-grid">
+                <div class="about__img">
+                    <img src="https://via.placeholder.com/300" alt="" id="aboutProfilePic">
+                </div>
+                
+                <div>
+                    <h2 class="about__subtitle">I'am <span id="aboutName">Your Name</span></h2>
+                    <p class="about__text" id="detailedAbout">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate cum expedita quo culpa tempora, assumenda, quis fugiat ut voluptates soluta, aut earum nemo recusandae cumque perferendis! Recusandae alias accusamus atque.</p>           
+                </div>                                   
+            </div>
+        </section>
+
+        <!--===== WORK =====-->
+        <section class="work section" id="work">
+            <h2 class="section-title">Work</h2>
+
+            <div class="work__container bd-grid" id="projectsGrid">
+                <!-- Projects will be loaded here -->
+                <div class="project-card">
+                    <img src="https://via.placeholder.com/600x400" alt="Project 1" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">Project Title</h3>
+                        <p class="project-description">Project description goes here.</p>
+                        <div class="project-stats">
+                            <div class="project-stat">
+                                <span class="material-icons stat-icon">thumb_up</span>
+                                <span>24</span>
+                            </div>
+                            <div class="project-stat">
+                                <span class="material-icons stat-icon">visibility</span>
+                                <span>156</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--===== CONTACT =====-->
+        <section class="contact section" id="contact">
+            <h2 class="section-title">Contact</h2>
+
+            <div class="contact__container bd-grid">
+                <form action="" class="contact__form" id="contactForm">
+                    <input type="text" placeholder="Name" class="contact__input" id="contactName">
+                    <input type="mail" placeholder="Email" class="contact__input" id="contactEmail">
+                    <textarea name="" id="contactMessage" cols="0" rows="10" class="contact__input" placeholder="Your Message"></textarea>
+                    <input type="button" value="Send" class="contact__button button" id="sendMessageBtn">
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!--===== FOOTER =====-->
+    <footer class="footer">
+        <p class="footer__title" id="footerName">FreelancerPro</p>
+        <div class="footer__social" id="footerSocialLinks">
+            <!-- Social links will be added here -->
+        </div>
+        <p class="footer__copy">© <span id="currentYear"></span> All rights reserved</p>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyB221RejvHWwYHPbMF4-J5NaU6g0sdAjEI",
+            authDomain: "freelanceflow-93fa9.firebaseapp.com",
+            projectId: "freelanceflow-93fa9",
+            storageBucket: "freelanceflow-93fa9.appspot.com",
+            messagingSenderId: "296748017027",
+            appId: "1:296748017027:web:677499aade0ad0188f82b6",
+            measurementId: "G-C0GN3LHQ2G"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Get the username from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const username = urlParams.get('username');
+
+        // DOM Elements
+        const portfolioProfilePic = document.getElementById('portfolioProfilePic');
+        const portfolioName = document.getElementById('portfolioName');
+        const portfolioTitle = document.getElementById('portfolioTitle');
+        const portfolioAbout = document.getElementById('portfolioAbout');
+        const portfolioSocialLinks = document.getElementById('portfolioSocialLinks');
+        const aboutProfilePic = document.getElementById('aboutProfilePic');
+        const aboutName = document.getElementById('aboutName');
+        const detailedAbout = document.getElementById('detailedAbout');
+        const projectsGrid = document.getElementById('projectsGrid');
+        const footerName = document.getElementById('footerName');
+        const footerSocialLinks = document.getElementById('footerSocialLinks');
+        const currentYear = document.getElementById('currentYear');
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const navLinks = document.querySelectorAll('.nav__link');
+
+        // Initialize the page
+        function init() {
+            // Set current year in footer
+            currentYear.textContent = new Date().getFullYear();
+
+            // Mobile menu toggle
+            navToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('show');
+            });
+
+            // Close menu when clicking on a nav link
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('show');
+                    
+                    // Set active link
+                    document.querySelectorAll('.nav__link').forEach(item => {
+                        item.classList.remove('active-link');
+                    });
+                    link.classList.add('active-link');
+                });
+            });
+
+            if (username) {
+                loadPortfolioData(username);
+            } else {
+                // No username provided - show error or redirect
+                document.body.innerHTML = `
+                    <div style="text-align: center; padding: 5rem;">
+                        <h1 style="color: var(--primary-color); margin-bottom: 1rem;">Portfolio Not Found</h1>
+                        <p style="margin-bottom: 2rem;">Please specify a username in the URL (e.g., ?username=yourname)</p>
+                        <a href="/" style="display: inline-block; padding: 0.75rem 1.5rem; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 6px;">
+                            Go to Homepage
+                        </a>
+                    </div>
+                `;
+            }
+        }
+
+        async function loadPortfolioData(username) {
+            try {
+                console.log("Loading portfolio data for username:", username);
+                
+                // Query the database for the user with this username
+                const querySnapshot = await db.collection('websiteDetails')
+                    .where('username', '==', username.toLowerCase())
+                    .limit(1)
+                    .get();
+
+                if (querySnapshot.empty) {
+                    // No user found with this username
+                    document.body.innerHTML = `
+                        <div style="text-align: center; padding: 5rem;">
+                            <h1 style="color: var(--primary-color); margin-bottom: 1rem;">Portfolio Not Found</h1>
+                            <p style="margin-bottom: 2rem;">The portfolio "${username}" doesn't exist.</p>
+                            <a href="/" style="display: inline-block; padding: 0.75rem 1.5rem; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 6px;">
+                                Go to Homepage
+                            </a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Get the user data
+                const doc = querySnapshot.docs[0];
+                const userData = doc.data();
+                console.log("User data loaded:", userData);
+                
+                // Populate the portfolio page
+                populatePortfolio(userData);
+                
+                // Load projects for this user using the featuredProjects array
+                if (userData.featuredProjects && userData.featuredProjects.length > 0) {
+                    loadFeaturedProjects(userData.featuredProjects);
+                } else {
+                    projectsGrid.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-light);">
+                            <p>This freelancer hasn't added any projects yet.</p>
+                        </div>
+                    `;
+                }
+                
+            } catch (error) {
+                console.error("Error loading portfolio:", error);
+                document.body.innerHTML = `
+                    <div style="text-align: center; padding: 5rem;">
+                        <h1 style="color: var(--primary-color); margin-bottom: 1rem;">Error Loading Portfolio</h1>
+                        <p style="margin-bottom: 2rem;">There was an error loading this portfolio. Please try again later.</p>
+                        <a href="/" style="display: inline-block; padding: 0.75rem 1.5rem; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 6px;">
+                            Go to Homepage
+                        </a>
+                    </div>
+                `;
+            }
+        }
+
+        function populatePortfolio(data) {
+            console.log("Populating portfolio with data:", data);
+            
+            // Set profile information
+            if (data.profilePic) {
+                portfolioProfilePic.src = data.profilePic;
+                aboutProfilePic.src = data.profilePic;
+            }
+            
+            const displayName = data.name || "FreelancerPro Member";
+            portfolioName.textContent = displayName;
+            aboutName.textContent = displayName;
+            footerName.textContent = displayName;
+            
+            portfolioTitle.textContent = data.title || "Creative Professional";
+            portfolioAbout.textContent = data.about || "Creative professional sharing work on FreelancerPro.";
+            detailedAbout.textContent = data.detailedAbout || data.about || "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate cum expedita quo culpa tempora, assumenda, quis fugiat ut voluptates soluta, aut earum nemo recusandae cumque perferendis! Recusandae alias accusamus atque.";
+            
+            // Set contact button
+            if (data.email) {
+                document.getElementById('contactEmail').value = data.email;
+            }
+            
+            // Add social links
+            if (data.socialLinks) {
+                portfolioSocialLinks.innerHTML = '';
+                footerSocialLinks.innerHTML = '';
+                
+                const socialPlatforms = [
+                    { key: 'instagram', icon: 'bx bxl-instagram', name: 'Instagram' },
+                    { key: 'linkedin', icon: 'bx bxl-linkedin', name: 'LinkedIn' },
+                    { key: 'github', icon: 'bx bxl-github', name: 'GitHub' },
+                    { key: 'twitter', icon: 'bx bxl-twitter', name: 'Twitter' },
+                    { key: 'behance', icon: 'bx bxl-behance', name: 'Behance' },
+                    { key: 'facebook', icon: 'bx bxl-facebook', name: 'Facebook' },
+                    { key: 'dribbble', icon: 'bx bxl-dribbble', name: 'Dribbble' }
+                ];
+                
+                socialPlatforms.forEach(platform => {
+                    if (data.socialLinks[platform.key]) {
+                        // Home social links
+                        const homeLink = document.createElement('a');
+                        homeLink.href = ensureHttps(data.socialLinks[platform.key]);
+                        homeLink.target = "_blank";
+                        homeLink.className = "home__social-icon";
+                        homeLink.innerHTML = `<i class='${platform.icon}'></i>`;
+                        portfolioSocialLinks.appendChild(homeLink);
+                        
+                        // Footer social links
+                        const footerLink = document.createElement('a');
+                        footerLink.href = ensureHttps(data.socialLinks[platform.key]);
+                        footerLink.target = "_blank";
+                        footerLink.className = "footer__icon";
+                        footerLink.innerHTML = `<i class='${platform.icon}'></i>`;
+                        footerSocialLinks.appendChild(footerLink);
+                    }
+                });
+            }
+        }
+
+        async function loadFeaturedProjects(projectIds) {
+            try {
+                console.log("Loading featured projects:", projectIds);
+                
+                // Get all projects at once using 'in' query (limited to 10 items)
+                const projectsQuery = await db.collection('projects')
+                    .where(firebase.firestore.FieldPath.documentId(), 'in', projectIds.slice(0, 10))
+                    .get();
+
+                if (projectsQuery.empty) {
+                    projectsGrid.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-light);">
+                            <p>No projects found</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Create a map of project data by ID
+                const projectsMap = {};
+                projectsQuery.forEach(doc => {
+                    projectsMap[doc.id] = doc.data();
+                });
+
+                // Render projects in the order they appear in featuredProjects
+                projectsGrid.innerHTML = '';
+                projectIds.forEach(projectId => {
+                    if (projectsMap[projectId]) {
+                        const projectElement = createProjectCard(projectsMap[projectId]);
+                        projectsGrid.appendChild(projectElement);
+                    }
+                });
+
+            } catch (error) {
+                console.error('Error loading featured projects:', error);
+                projectsGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-light);">
+                        <p>Error loading projects. Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function createProjectCard(project) {
+            const card = document.createElement('div');
+            card.className = "project-card";
+            
+            let mediaElement = '';
+            if (project.imageUrl) {
+                mediaElement = `<img src="${project.imageUrl}" alt="${project.title || 'Project'}" class="project-image">`;
+            } else if (project.videoUrl) {
+                const videoId = extractVideoId(project.videoUrl);
+                if (videoId) {
+                    mediaElement = `
+                        <iframe src="https://www.youtube.com/embed/${videoId}" 
+                                class="project-image" 
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen></iframe>
+                    `;
+                } else {
+                    mediaElement = `<div class="project-image" style="display: flex; align-items: center; justify-content: center; background: #f0f0f0;">
+                        <span class="material-icons" style="font-size: 3rem; color: var(--text-light);">link</span>
+                    </div>`;
+                }
+            } else {
+                mediaElement = `<img src="https://via.placeholder.com/600x400" alt="${project.title || 'Project'}" class="project-image">`;
+            }
+            
+            card.innerHTML = `
+                ${mediaElement}
+                <div class="project-info">
+                    <h3 class="project-title">${project.title || "Untitled Project"}</h3>
+                    <p class="project-description">${project.description || "No description provided."}</p>
+                    <div class="project-stats">
+                        <div class="project-stat">
+                            <span class="material-icons stat-icon">thumb_up</span>
+                            ${project.likes || 0}
+                        </div>
+                        <div class="project-stat">
+                            <span class="material-icons stat-icon">visibility</span>
+                            ${project.views || 0}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function extractVideoId(url) {
+            if (!url) return null;
+            
+            // YouTube URL patterns
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        function ensureHttps(url) {
+            if (!url) return '';
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                return 'https://' + url;
+            }
+            return url.replace('http://', 'https://');
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

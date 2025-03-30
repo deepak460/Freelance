@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #9078E3;
+            --primary-hover: #7b62d1;
+            --bg-color: #f5f5f5;
+            --text-color: #333;
+            --text-light: #707070;
+            --card-bg: #FAF8F6;
+            --border-color: #e0e0e0;
+            --error-color: #f44336;
+            --success-color: #4CAF50;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 70px;
+            padding: 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .page-title {
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        /* Profile Page Specific Styles */
+        .profile-container {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .profile-sidebar {
+            width: 300px;
+            flex-shrink: 0;
+        }
+
+        .profile-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-pic-container {
+            position: relative;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+            border: 3px solid var(--primary-color);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-pic-upload {
+            position: absolute;
+            bottom: 10px;
+            right: calc(50% - 75px + 10px);
+            background-color: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-main {
+            flex-grow: 1;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(144, 120, 227, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .error-text {
+            color: var(--error-color);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .social-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+
+        .btn-icon {
+            margin-right: 8px;
+        }
+
+        /* Portfolio Preview Section */
+        .portfolio-preview {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .portfolio-preview h2{
+            display: none;
+        }
+
+        .preview-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            color: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            animation: fadeIn 0.3s, fadeOut 0.3s 2.7s;
+            display: flex;
+            align-items: center;
+        }
+
+        .toast.success {
+            background-color: var(--success-color);
+        }
+
+        .toast.error {
+            background-color: var(--error-color);
+        }
+
+        .toast-icon {
+            margin-right: 8px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-container {
+                flex-direction: column;
+            }
+
+            .profile-sidebar {
+                width: 100%;
+            }
+
+            .social-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Projects Section */
+        .projects-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-item {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .project-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-media {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-video {
+            width: 100%;
+            height: 200px;
+            border: none;
+        }
+
+        .project-info {
+            padding: 1rem;
+        }
+
+        .project-actions {
+            display: flex;
+            justify-content: flex-end;
+            padding: 0.5rem;
+            background-color: var(--card-bg);
+        }
+
+        .project-actions button {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .project-actions button:hover {
+            color: var(--error-color);
+        }
+
+        /* Media Preview */
+        .media-preview {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 1.5rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover {
+            color: var(--text-color);
+        }
+
+        .modal-body {
+            padding: 0.5rem 0;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Make modal responsive */
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 10% auto;
+                width: 95%;
+            }
+
+            .modal-footer {
+                flex-direction: column;
+            }
+
+            .modal-footer .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">FreelancerPro</div>
+        <div class="nav-links">
+            <a href="dashboad.html">Dashboard</a>
+            <a href="profile.html" class="active">Profile</a>
+        </div>
+        <div class="user-profile">
+            <img id="userAvatar" class="user-avatar" src="" alt="User">
+            <span id="userName"></span>
+            <button id="logoutBtn" class="btn" style="margin-left: 10px; padding: 0.5rem 1rem;">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Your Profile</h1>
+        </div>
+
+        <div class="profile-container">
+            <!-- Sidebar -->
+            <div class="profile-sidebar">
+                <div class="profile-card">
+                    <div class="profile-pic-container">
+                        <img id="profilePicPreview" class="profile-pic" src="https://via.placeholder.com/150"
+                            alt="Profile Picture">
+                        <div class="profile-pic-upload" id="uploadTrigger">
+                            <span class="material-icons">edit</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="profileUsername">Username *</label>
+                        <input type="text" id="profileUsername" class="form-control" required>
+                        <small style="color: var(--text-light); margin-top: 0.5rem; display: block;">
+                            Your portfolio URL: <span id="portfolioUrlPreview">freelancerpro.com/username</span>
+                        </small>
+                        <div id="profileUsernameError" class="error-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="profile-main">
+                <div class="profile-card">
+                    <div class="form-group">
+                        <label for="profileName">Full Name *</label>
+                        <input type="text" id="profileName" class="form-control" required>
+                        <div id="profileNameError" class="error-text"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profileAbout">About You *</label>
+                        <textarea id="profileAbout" class="form-control" required></textarea>
+                        <div id="profileAboutError" class="error-text"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contact Information</label>
+                        <div class="social-links">
+                            <div>
+                                <label for="profileEmail">Email *</label>
+                                <input type="email" id="profileEmail" class="form-control" required>
+                                <div id="profileEmailError" class="error-text"></div>
+                            </div>
+                            <div>
+                                <label for="profilePhone">Phone</label>
+                                <input type="tel" id="profilePhone" class="form-control">
+                            </div>
+                            <div>
+                                <label for="profileInstagram">Instagram</label>
+                                <input type="url" id="profileInstagram" class="form-control"
+                                    placeholder="https://instagram.com/username">
+                            </div>
+                            <div>
+                                <label for="profileLinkedIn">LinkedIn</label>
+                                <input type="url" id="profileLinkedIn" class="form-control"
+                                    placeholder="https://linkedin.com/in/username">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button type="button" id="saveProfileBtn" class="btn">
+                            <span class="material-icons btn-icon">save</span>
+                            Save Profile
+                        </button>
+                        <button type="button" id="previewPortfolioBtn" class="btn btn-secondary">
+                            <span class="material-icons btn-icon">visibility</span>
+                            Preview Portfolio
+                        </button>
+                    </div>
+                </div>
+                <!-- Projects Section -->
+                <div class="portfolio-projects">
+                    <h2>Your Projects</h2>
+                    <div class="projects-list" id="projectsList">
+                        <!-- Projects will be added here dynamically -->
+                        <p style="color: var(--text-light); text-align: center; margin-top: 1rem;">No projects added yet
+                        </p>
+                    </div>
+
+                    <!-- Add Project Modal -->
+                    <div id="projectModal" class="modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3>Add New Project</h3>
+                                <button class="close-modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="projectTitle">Project Title *</label>
+                                    <input type="text" id="projectTitle" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="projectDescription">Description</label>
+                                    <textarea id="projectDescription" class="form-control" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Media *</label>
+                                    <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
+                                        <button type="button" id="uploadImageBtn" class="btn"
+                                            style="padding: 0.5rem 1rem;">
+                                            <span class="material-icons btn-icon">image</span>
+                                            Upload Image
+                                        </button>
+                                        <span>or</span>
+                                        <div class="form-group" style="flex-grow: 1; margin-bottom: 0;">
+                                            <input type="url" id="projectVideoUrl" class="form-control"
+                                                placeholder="YouTube/Vimeo URL">
+                                        </div>
+                                    </div>
+                                    <div id="projectMediaPreview" style="margin-top: 1rem; text-align: center;"></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="addProjectBtn" class="btn">
+                                    <span class="material-icons btn-icon">add</span>
+                                    Add Project
+                                </button>
+                                <button type="button" class="btn btn-secondary close-modal">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add this button where the old form was -->
+                    <div class="add-project-section" style="margin-top: 2rem; text-align: center;">
+                        <button id="openProjectModal" class="btn">
+                            <span class="material-icons btn-icon">add</span>
+                            Add New Project
+                        </button>
+                    </div>
+                </div>
+                <!-- Portfolio Preview Section -->
+                <div class="portfolio-preview">
+                    <h2>Portfolio Preview</h2>
+                    <div class="preview-container" id="portfolioPreviewContainer">
+                        <p style="color: var(--text-light); text-align: center;">Your portfolio preview will appear here
+                            after saving</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cloudinary Upload Widget SDK -->
+    <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyB221RejvHWwYHPbMF4-J5NaU6g0sdAjEI",
+            authDomain: "freelanceflow-93fa9.firebaseapp.com",
+            projectId: "freelanceflow-93fa9",
+            storageBucket: "freelanceflow-93fa9.appspot.com",
+            messagingSenderId: "296748017027",
+            appId: "1:296748017027:web:677499aade0ad0188f82b6",
+            measurementId: "G-C0GN3LHQ2G"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Cloudinary Configuration
+        const cloudinaryConfig = {
+            cloudName: 'dhily4og7',
+            uploadPreset: 'deepak',
+            cropping: true,
+            croppingAspectRatio: 1,
+            croppingDefaultSelectionRatio: 1,
+            croppingShowDimensions: true,
+            sources: ['local', 'url', 'camera'],
+            multiple: false,
+            clientAllowedFormats: ['jpg', 'png', 'webp'],
+            maxImageFileSize: 5000000, // 5MB
+            styles: {
+                palette: {
+                    window: '#FFFFFF',
+                    windowBorder: '#9078E3',
+                    tabIcon: '#9078E3',
+                    menuIcons: '#9078E3',
+                    textDark: '#333333',
+                    textLight: '#FFFFFF',
+                    link: '#9078E3',
+                    action: '#9078E3',
+                    inactiveTabIcon: '#777777',
+                    error: '#F44235',
+                    inProgress: '#9078E3',
+                    complete: '#20B832',
+                    sourceBg: '#F5F5F5'
+                }
+            }
+        };
+
+        // DOM Elements
+        const userName = document.getElementById('userName');
+        const userAvatar = document.getElementById('userAvatar');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const profileName = document.getElementById('profileName');
+        const profileUsername = document.getElementById('profileUsername');
+        const profileAbout = document.getElementById('profileAbout');
+        const profileEmail = document.getElementById('profileEmail');
+        const profilePhone = document.getElementById('profilePhone');
+        const profileInstagram = document.getElementById('profileInstagram');
+        const profileLinkedIn = document.getElementById('profileLinkedIn');
+        const profilePicPreview = document.getElementById('profilePicPreview');
+        const uploadTrigger = document.getElementById('uploadTrigger');
+        const portfolioUrlPreview = document.getElementById('portfolioUrlPreview');
+        const saveProfileBtn = document.getElementById('saveProfileBtn');
+        const previewPortfolioBtn = document.getElementById('previewPortfolioBtn');
+        const portfolioPreviewContainer = document.getElementById('portfolioPreviewContainer');
+        
+        // Project related elements
+        const projectsList = document.getElementById('projectsList');
+        const projectTitle = document.getElementById('projectTitle');
+        const projectDescription = document.getElementById('projectDescription');
+        const projectVideoUrl = document.getElementById('projectVideoUrl');
+        const projectMediaPreview = document.getElementById('projectMediaPreview');
+        const addProjectBtn = document.getElementById('addProjectBtn');
+        const uploadImageBtn = document.getElementById('uploadImageBtn');
+        
+        // Modal elements
+        const projectModal = document.getElementById('projectModal');
+        const openProjectModal = document.getElementById('openProjectModal');
+        const closeModalButtons = document.querySelectorAll('.close-modal');
+
+        // Error elements
+        const errorElements = {
+            profileName: document.getElementById('profileNameError'),
+            profileUsername: document.getElementById('profileUsernameError'),
+            profileAbout: document.getElementById('profileAboutError'),
+            profileEmail: document.getElementById('profileEmailError')
+        };
+
+        // Global variables
+        let profileData = {};
+        let profileImageUrl = '';
+        let currentUserProjects = [];
+
+        // Initialize the page
+        function init() {
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    setupAuthState(user);
+                    loadProfileData(user.uid);
+                } else {
+                    window.location.href = 'dashboard.html';
+                }
+            });
+
+            // Event listeners
+            setupEventListeners();
+        }
+
+        function setupAuthState(user) {
+            userName.textContent = user.displayName || 'User';
+            userAvatar.src = user.photoURL || 'https://via.placeholder.com/150';
+        }
+
+        function setupEventListeners() {
+            logoutBtn.addEventListener('click', handleLogout);
+            uploadTrigger.addEventListener('click', openCloudinaryWidget);
+            saveProfileBtn.addEventListener('click', saveProfile);
+            previewPortfolioBtn.addEventListener('click', previewPortfolio);
+            profileUsername.addEventListener('input', updatePortfolioUrlPreview);
+            
+            // Project modal listeners
+            openProjectModal.addEventListener('click', () => toggleModal(true));
+            closeModalButtons.forEach(btn => btn.addEventListener('click', () => toggleModal(false)));
+            uploadImageBtn.addEventListener('click', openProjectImageWidget);
+            addProjectBtn.addEventListener('click', addProject);
+            
+            // Modal close handlers
+            projectModal.addEventListener('click', (e) => {
+                if (e.target === projectModal) toggleModal(false);
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && projectModal.style.display === 'block') {
+                    toggleModal(false);
+                }
+            });
+            
+            // Delete project handler
+            document.addEventListener('click', async (e) => {
+                if (e.target.closest('.delete-project')) {
+                    const projectId = e.target.closest('.delete-project').dataset.id;
+                    if (confirm('Are you sure you want to delete this project?')) {
+                        try {
+                            // Remove project from projects collection
+                            await db.collection('projects').doc(projectId).delete();
+                            
+                            // Remove project ID from user's featuredProjects array
+                            const userId = auth.currentUser.uid;
+                            await db.collection('websiteDetails').doc(userId).update({
+                                featuredProjects: firebase.firestore.FieldValue.arrayRemove(projectId)
+                            });
+                            
+                            showToast('Project deleted successfully');
+                            loadProfileData(userId); // Reload profile data which includes projects
+                        } catch (error) {
+                            console.error('Error deleting project:', error);
+                            showToast('Error deleting project', 'error');
+                        }
+                    }
+                }
+            });
+        }
+
+        // Modal functions
+        function toggleModal(show) {
+            if (show) {
+                projectModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            } else {
+                projectModal.style.display = 'none';
+                document.body.style.overflow = '';
+                // Clear form when closing
+                projectTitle.value = '';
+                projectDescription.value = '';
+                projectVideoUrl.value = '';
+                projectMediaPreview.innerHTML = '';
+                if (document.getElementById('projectImageUrl')) {
+                    document.getElementById('projectImageUrl').remove();
+                }
+            }
+        }
+
+        // Cloudinary config for projects
+        const cloudinaryProjectConfig = {
+            ...cloudinaryConfig,
+            folder: 'freelancer-projects',
+            cropping: false,
+            multiple: false
+        };
+
+        function openProjectImageWidget(e) {
+            e.preventDefault();
+            
+            const widget = cloudinary.createUploadWidget(
+                cloudinaryProjectConfig,
+                (error, result) => {
+                    if (!error && result && result.event === "success") {
+                        projectMediaPreview.innerHTML = `
+                            <img src="${result.info.secure_url}" class="media-preview">
+                            <input type="hidden" id="projectImageUrl" value="${result.info.secure_url}">
+                        `;
+                    } else if (error) {
+                        console.error('Project image upload error:', error);
+                        showToast('Error uploading image. Please try again.', 'error');
+                    }
+                }
+            );
+            
+            widget.open();
+        }
+
+        async function addProject() {
+            const userId = auth.currentUser?.uid;
+            if (!userId) return;
+
+            const title = projectTitle.value.trim();
+            const description = projectDescription.value.trim();
+            const videoUrl = projectVideoUrl.value.trim();
+            const imageUrl = document.getElementById('projectImageUrl')?.value;
+
+            if (!title) {
+                showToast('Project title is required', 'error');
+                return;
+            }
+
+            if (!imageUrl && !videoUrl) {
+                showToast('Please add either an image or video URL', 'error');
+                return;
+            }
+
+            try {
+                addProjectBtn.disabled = true;
+                addProjectBtn.innerHTML = '<span class="spinner"></span> Adding...';
+
+                const projectData = {
+                    title,
+                    description,
+                    imageUrl: imageUrl || '',
+                    videoUrl: videoUrl || '',
+                    userId,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    likes: 0,
+                    views: 0
+                };
+
+                // Add project to projects collection
+                const projectRef = await db.collection('projects').add(projectData);
+                
+                // Add project ID to user's featuredProjects array
+                await db.collection('websiteDetails').doc(userId).update({
+                    featuredProjects: firebase.firestore.FieldValue.arrayUnion(projectRef.id)
+                });
+                
+                showToast('Project added successfully!');
+                loadProfileData(userId); // Reload profile data which includes projects
+                toggleModal(false);
+                
+            } catch (error) {
+                console.error('Error adding project:', error);
+                showToast('Error adding project. Please try again.', 'error');
+            } finally {
+                addProjectBtn.disabled = false;
+                addProjectBtn.innerHTML = '<span class="material-icons btn-icon">add</span> Add Project';
+            }
+        }
+
+        async function loadProfileData(userId) {
+    try {
+        const doc = await db.collection('websiteDetails').doc(userId).get();
+
+        if (!doc.exists) {
+            profileData = await initializeProfile(userId); // Wait for initialization
+        } else {
+            profileData = doc.data();
+            // Ensure featuredProjects exists
+            if (!profileData.featuredProjects) {
+                profileData.featuredProjects = [];
+                await db.collection('websiteDetails').doc(userId).update({
+                    featuredProjects: []
+                });
+            }
+        }
+
+        populateFormFields(profileData);
+        updatePortfolioUrlPreview();
+        renderPortfolioPreview(profileData);
+        
+        // Load projects if any are featured
+        if (profileData.featuredProjects && profileData.featuredProjects.length > 0) {
+            await loadFeaturedProjects(profileData.featuredProjects);
+        } else {
+            projectsList.innerHTML = '<p style="color: var(--text-light); text-align: center; margin-top: 1rem;">No projects added yet</p>';
+        }
+
+    } catch (error) {
+        console.error("Firestore error:", error);
+        showToast('Error loading profile data', 'error');
+    }
+}
+
+async function loadFeaturedProjects(projectIds) {
+    try {
+        // Check if projectIds exists and is an array
+        if (!Array.isArray(projectIds) || projectIds.length === 0) {
+            projectsList.innerHTML = '<p style="color: var(--text-light); text-align: center; margin-top: 1rem;">No projects added yet</p>';
+            return;
+        }
+
+        // Get all projects at once using 'in' query
+        const projectsQuery = await db.collection('projects')
+            .where(firebase.firestore.FieldPath.documentId(), 'in', projectIds.slice(0, 10)) // Firestore limit of 10 for 'in' queries
+            .get();
+
+        if (projectsQuery.empty) {
+            projectsList.innerHTML = '<p style="color: var(--text-light); text-align: center; margin-top: 1rem;">No projects found</p>';
+            return;
+        }
+
+        // Create a map of project data by ID
+        const projectsMap = {};
+        projectsQuery.forEach(doc => {
+            projectsMap[doc.id] = doc.data();
+        });
+
+        // Render projects in the order they appear in featuredProjects
+        projectsList.innerHTML = '';
+        projectIds.forEach(projectId => {
+            if (projectsMap[projectId]) {
+                const projectElement = createProjectElement(projectsMap[projectId], projectId);
+                projectsList.appendChild(projectElement);
+            }
+        });
+
+    } catch (error) {
+        console.error('Error loading featured projects:', error);
+        showToast('Error loading projects', 'error');
+        projectsList.innerHTML = '<p style="color: var(--text-light); text-align: center; margin-top: 1rem;">Error loading projects</p>';
+    }
+}
+
+        function createProjectElement(project, projectId) {
+            const projectItem = document.createElement('div');
+            projectItem.className = 'project-item';
+            
+            let mediaElement = '';
+            if (project.imageUrl) {
+                mediaElement = `<img src="${project.imageUrl}" class="project-media" alt="${project.title}">`;
+            } else if (project.videoUrl) {
+                const videoId = extractVideoId(project.videoUrl);
+                if (videoId) {
+                    mediaElement = `
+                        <iframe src="https://www.youtube.com/embed/${videoId}" 
+                                class="project-video" 
+                                allowfullscreen></iframe>
+                    `;
+                } else {
+                    mediaElement = `<div class="project-media" style="display: flex; align-items: center; justify-content: center; background: #f0f0f0;">
+                        <span class="material-icons" style="font-size: 3rem; color: var(--text-light);">link</span>
+                    </div>`;
+                }
+            }
+            
+            projectItem.innerHTML = `
+                ${mediaElement}
+                <div class="project-info">
+                    <h4 style="margin-bottom: 0.5rem;">${project.title}</h4>
+                    <p style="color: var(--text-light); font-size: 0.9rem;">${project.description || 'No description'}</p>
+                </div>
+                <div class="project-actions">
+                    <button class="delete-project" data-id="${projectId}">
+                        <span class="material-icons">delete</span>
+                    </button>
+                </div>
+            `;
+            
+            return projectItem;
+        }
+
+        function extractVideoId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        async function initializeProfile(userId) {
+    const defaultProfile = {
+        name: "",
+        username: "",
+        about: "",
+        email: auth.currentUser.email || "",
+        phone: "",
+        social: {
+            instagram: "",
+            linkedin: ""
+        },
+        profilePic: "",
+        userId: userId,
+        featuredProjects: [], // Initialize as empty array
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        lastUpdated: firebase.firestore.FieldValue.serverTimestamp() // Add this
+    };
+
+    try {
+        await db.collection('websiteDetails').doc(userId).set(defaultProfile);
+        profileData = defaultProfile;
+        populateFormFields(profileData);
+        return defaultProfile; // Return the initialized profile
+    } catch (error) {
+        console.error("Init profile error:", error);
+        throw error;
+    }
+}
+
+        function populateFormFields(data) {
+            profileName.value = data.name || '';
+            profileUsername.value = data.username || '';
+            profileAbout.value = data.about || '';
+            profileEmail.value = data.email || '';
+            profilePhone.value = data.phone || '';
+            profileInstagram.value = data.social?.instagram || '';
+            profileLinkedIn.value = data.social?.linkedin || '';
+
+            if (data.profilePic) {
+                profileImageUrl = data.profilePic;
+                profilePicPreview.src = data.profilePic;
+            }
+        }
+
+        function updatePortfolioUrlPreview() {
+            const username = profileUsername.value.trim().toLowerCase() || 'username';
+            portfolioUrlPreview.textContent = `freelancerpro.com/${username.replace(/\s+/g, '-')}`;
+        }
+
+        function openCloudinaryWidget(e) {
+            e.preventDefault();
+
+            const widget = cloudinary.createUploadWidget(
+                cloudinaryConfig,
+                (error, result) => {
+                    if (!error && result && result.event === "success") {
+                        profileImageUrl = result.info.secure_url;
+                        profilePicPreview.src = profileImageUrl;
+                        showToast('Profile picture uploaded successfully!');
+                    } else if (error) {
+                        console.error('Cloudinary upload error:', error);
+                        showToast('Error uploading image. Please try again.', 'error');
+                    }
+                }
+            );
+
+            widget.open();
+        }
+
+        function validateForm() {
+            let isValid = true;
+
+            // Clear previous errors
+            Object.values(errorElements).forEach(el => {
+                el.style.display = 'none';
+            });
+
+            // Validate each required field
+            if (!profileName.value.trim()) {
+                showError('profileName', 'Full name is required');
+                isValid = false;
+            }
+
+            if (!profileUsername.value.trim()) {
+                showError('profileUsername', 'Username is required');
+                isValid = false;
+            } else if (!/^[a-z0-9_-]+$/.test(profileUsername.value.trim())) {
+                showError('profileUsername', 'Only lowercase letters, numbers, hyphens and underscores');
+                isValid = false;
+            }
+
+            if (!profileAbout.value.trim()) {
+                showError('profileAbout', 'About section is required');
+                isValid = false;
+            }
+
+            if (!profileEmail.value.trim()) {
+                showError('profileEmail', 'Email is required');
+                isValid = false;
+            } else if (!/^\S+@\S+\.\S+$/.test(profileEmail.value.trim())) {
+                showError('profileEmail', 'Invalid email format');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function showError(field, message) {
+            if (errorElements[field]) {
+                errorElements[field].textContent = message;
+                errorElements[field].style.display = 'block';
+            }
+        }
+
+        async function saveProfile() {
+    const userId = auth.currentUser?.uid;
+    if (!userId) {
+        showToast("Authentication error. Please login again.", "error");
+        return;
+    }
+
+    // Validate form
+    if (!validateForm()) return;
+
+    try {
+        saveProfileBtn.disabled = true;
+        saveProfileBtn.innerHTML = '<span class="spinner"></span> Saving...';
+
+        const updatedProfile = {
+            name: profileName.value.trim(),
+            username: profileUsername.value.trim().toLowerCase(),
+            about: profileAbout.value.trim(),
+            email: profileEmail.value.trim(),
+            phone: profilePhone.value.trim(),
+            social: {
+                instagram: profileInstagram.value.trim(),
+                linkedin: profileLinkedIn.value.trim()
+            },
+            profilePic: profileImageUrl || profileData.profilePic || '',
+            lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
+            userId: userId,
+            // Preserve existing projects or initialize empty array
+            featuredProjects: profileData.featuredProjects || []
+        };
+
+        // Use set with merge to preserve any existing fields not in updatedProfile
+        await db.collection('websiteDetails').doc(userId).set(updatedProfile, { merge: true });
+        profileData = updatedProfile;
+
+        showToast("Profile saved successfully!");
+        renderPortfolioPreview(updatedProfile);
+
+    } catch (error) {
+        console.error("Save error:", error);
+        showToast("Error saving profile: " + error.message, "error");
+    } finally {
+        saveProfileBtn.disabled = false;
+        saveProfileBtn.innerHTML = '<span class="material-icons btn-icon">save</span> Save Profile';
+    }
+}
+
+        function previewPortfolio() {
+            if (!profileData.name) {
+                showToast("Please save your profile first", "error");
+                return;
+            }
+
+            // Check if we have a username
+            if (!profileData.username) {
+                showToast("Please set a username first", "error");
+                return;
+            }
+
+            // Open portfolio in new tab
+            const portfolioUrl = `portfolio.html?username=${encodeURIComponent(profileData.username)}`;
+            window.open(portfolioUrl, '_blank');
+        }
+
+        function renderPortfolioPreview(data) {
+            portfolioPreviewContainer.innerHTML = `
+                <div class="portfolio-header" style="text-align: center; margin-bottom: 2rem;">
+                    <img src="${data.profilePic || 'https://via.placeholder.com/150'}" 
+                         alt="${data.name}" 
+                         style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-color); margin-bottom: 1rem;">
+                    <h1 style="color: var(--primary-color); margin-bottom: 0.5rem;">${data.name}</h1>
+                    <p style="font-size: 1.2rem; color: var(--text-light); margin-bottom: 1.5rem;">${data.about}</p>
+                </div>
+                
+                <div class="portfolio-contact" style="background-color: var(--card-bg); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                    <h2 style="margin-bottom: 1rem; color: var(--primary-color);">Contact Information</h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <h3 style="font-size: 1rem; margin-bottom: 0.5rem; color: var(--text-light);">Email</h3>
+                            <p>${data.email}</p>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 1rem; margin-bottom: 0.5rem; color: var(--text-light);">Phone</h3>
+                            <p>${data.phone || 'Not provided'}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-social" style="margin-bottom: 2rem;">
+                    <h2 style="margin-bottom: 1rem; color: var(--primary-color);">Social Links</h2>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        ${data.social?.instagram ? `
+                            <a href="${ensureHttps(data.social.instagram)}" target="_blank" style="display: inline-flex; align-items: center; color: var(--primary-color); text-decoration: none; padding: 0.5rem 1rem; background-color: rgba(144, 120, 227, 0.1); border-radius: 6px;">
+                                <span class="material-icons" style="margin-right: 8px;">camera_alt</span>
+                                Instagram
+                            </a>
+                        ` : ''}
+                        ${data.social?.linkedin ? `
+                            <a href="${ensureHttps(data.social.linkedin)}" target="_blank" style="display: inline-flex; align-items: center; color: var(--primary-color); text-decoration: none; padding: 0.5rem 1rem; background-color: rgba(144, 120, 227, 0.1); border-radius: 6px;">
+                                <span class="material-icons" style="margin-right: 8px;">work</span>
+                                LinkedIn
+                            </a>
+                        ` : ''}
+                        ${!data.social?.instagram && !data.social?.linkedin ? '<p>No social links provided</p>' : ''}
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="dashboard.html" style="display: inline-block; padding: 0.75rem 1.5rem; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 6px; transition: background-color 0.3s;">
+                        Visit My Dashboard
+                    </a>
+                </div>
+            `;
+        }
+
+        function ensureHttps(url) {
+            if (!url) return '';
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                return 'https://' + url;
+            }
+            return url.replace('http://', 'https://');
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span class="material-icons toast-icon">${type === 'success' ? 'check_circle' : 'error'}</span>
+                ${message}
+            `;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        function handleLogout() {
+            auth.signOut()
+                .then(() => {
+                    window.location.href = 'dashboard.html';
+                })
+                .catch(error => {
+                    console.error('Logout error:', error);
+                    showToast('Error during logout. Please try again.', 'error');
+                });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
